@@ -21,4 +21,13 @@ public class OrderService {
 		return orderDAO.selectStation();
 	}
 
+	public int insert(OrderDTO orderDTO) {
+		return orderDAO.insert(orderDTO);
+	}
+
+	public int delete(String admin) {
+		
+		return orderDAO.delete(admin);
+	}
+
 }

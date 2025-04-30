@@ -1,9 +1,13 @@
 package com.rrobotMES.order;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
+import com.robotMES.admin.AdminDTO;
+import com.robotMES.admin.AdminView;
 import com.robotMES.comm.CommControllerInterface;
 import com.robotMES.product.ProductDTO;
 import com.robotMES.product.ProductView;
@@ -15,6 +19,7 @@ public class OrderController implements CommControllerInterface{
 	static Scanner sc = new Scanner(System.in);
 	OrderService orderService = new OrderService();
 	SimpleDateFormat sdf = new SimpleDateFormat("MMyyyyHHssddmm");
+	SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	@Override
 	public void execute() {
@@ -26,9 +31,8 @@ public class OrderController implements CommControllerInterface{
 			switch(job) {
 			case 1->{f_selectAll();}
 			case 2->{f_insert();}
-			case 3->{f_update();}
-			case 4->{f_delete();}
-			case 5->{isStop = true; continue; }
+			case 3->{f_delete();}
+			case 4->{isStop = true; continue; }
 			default ->{continue;}
 			}
 			
@@ -116,6 +120,7 @@ public class OrderController implements CommControllerInterface{
 		while(true) { //to Station 체크
 			System.out.print("종료 공정 이름 입력 :");
 			to_station_name = sc.next();
+			
 			if(to_station_name.equals("0")) return;
 			
 			for(StationDTO stationDTO : stationlist) {
@@ -124,18 +129,42 @@ public class OrderController implements CommControllerInterface{
 					break;
 				}
 			}
-			if(station_to == null) {
+			if(station_to == station_from) {
+				System.out.println("시작 공정 이름과 같습니다. 다시입력해하세요.[나가기 '0' 입력]");
+				station_to = null;
+			}
+			else if(station_to == null) {
 				System.out.println("없는 공정이름 입니다. 공정이름을 다시입력하세요.[나가기 '0' 입력]");
 			}else break;
 		}
-	
 		
-		orderService.insert(product,station_from,station_to);
+		java.util.Date utilDate = new java.util.Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String formattedDate = dateFormat.format(utilDate);
+		java.sql.Date sqlDate = java.sql.Date.valueOf(formattedDate);
 		
+		OrderDTO order = OrderDTO.builder()
+				.id(sdf.format(Calendar.getInstance().getTime()))
+				.admin_id("admin")
+				.product_id(product.getProduct_name())
+				.from_station_id(station_from.getStation_name())
+				.to_station_id(station_to.getStation_name())
+				.product_count(productGoal)
+				.order_at(sqlDate)
+				.build();
+		
+		orderService.insert(order);
+		OrderView.display(order);
 	}
 	
 	private void f_delete() {
+		System.out.print("생성한 오더 삭제 원한다면 아이디 입력 :");
+		String admin = sc.next();
 		
+		
+		int result = orderService.delete(admin);
+		
+		AdminView.display(result);
 		
 	}
 

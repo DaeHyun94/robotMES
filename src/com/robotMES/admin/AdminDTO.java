@@ -14,6 +14,10 @@ public class AdminDTO {
 	private String id;
 	private String admin_id;
 	private String admin_password;
+	@Override
+	public String toString() {
+		return "[id=" + id + ", 관리자ID =" + admin_id + ", 관리자PW=" + admin_password + "]";
+	}
 	
 	
 }

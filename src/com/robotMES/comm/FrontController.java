@@ -19,8 +19,12 @@ public class FrontController {
 			System.out.print("■ Login ID >> ");
 			String job = sc.next();
 			
+			System.out.print("■ Login PW >> ");
+			job += sc.next();
+			
 			switch(job) {
-				case "Admin" -> {controller = ControllerFactory.make("Admin");}
+				case "Admin1234" -> {controller = ControllerFactory.make("Admin");}
+				case "User1234" -> {controller = ControllerFactory.make("User");}
 				case "end" -> {isStop = true; continue;}
 				default -> {loginDisplay(); continue;}
 			}
@@ -34,7 +38,7 @@ public class FrontController {
 
 	private static void loginDisplay() {
 		System.out.println("""
-				▶ 존재하지 않는 아이디입니다.
+				▶ 아이디 또는 패스워드가 일치하지 않습니다 
 				
 				""");
 	}

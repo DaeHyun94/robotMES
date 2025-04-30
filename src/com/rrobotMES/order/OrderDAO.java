@@ -1,6 +1,7 @@
 package com.rrobotMES.order;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -106,5 +107,57 @@ public class OrderDAO {
 			
 		return stationlist;
 	}
+
+	public int insert(OrderDTO orderDTO) {
+		int result = 0;
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement st = null;
+		
+		String sql = """
+					insert into tb_order(
+					ID,
+					admin_id, 
+					product_id, 
+					from_station_id,
+					to_station_id,
+					 product_count,
+					 order_at)
+					values(?,?,?,?,?,?,?)
+					""";
+		try {
+			st = conn.prepareStatement(sql);
+			st.setString(1,orderDTO.getId());
+			st.setString(2,orderDTO.getAdmin_id());
+			st.setString(3,orderDTO.getProduct_id());
+			st.setString(4, orderDTO.getFrom_station_id());
+			st.setString(5, orderDTO.getTo_station_id());
+			st.setInt(6, orderDTO.getProduct_count());
+			st.setDate(7, orderDTO.getOrder_at());
+			
+			result = st.executeUpdate();
+			
+		}catch(SQLException e){ e.printStackTrace();}
+		finally { DBUtil.dbDisconnect(conn, st);}
+		
+		
+		return result;
+	}
+
+	public int delete(String admin) {
+		int result = 0;
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement st = null;
+		String sql = "delete from tb_order where admin_id = ?";
+		try {
+			st = conn.prepareStatement(sql);
+			st.setString(1, admin);
+			result = st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	
 
 }
