@@ -3,11 +3,6 @@ package com.robotMES.admin;
 import java.util.Scanner;
 
 import com.robotMES.comm.CommControllerInterface;
-import com.robotMES.process.ProcessController;
-import com.robotMES.product.ProductController;
-import com.robotMES.robot.RobotCotroller;
-import com.robotMES.station.StationController;
-import com.rrobotMES.order.OrderController;
 
 public class AdminController implements CommControllerInterface{
 
@@ -22,44 +17,39 @@ public class AdminController implements CommControllerInterface{
 			int job = sc.nextInt();
 			
 			switch(job) {
-				case 1->{f_managementByStation();}
-				case 2->{f_managementByRobot();}
-				case 3->{f_managementByProduct();}
-				case 4->{f_managementByOrder();}
-				case 5->{f_managementByProcess();}
-				default ->{}
+			case 1->{f_selectAll();}
+			case 2->{f_insert();}
+			case 3->{f_update();}
+			case 4->{f_delete();}
+			case 5->{isStop = true; continue; }
+			default ->{continue;}
 			}
+			
+			
+			
 			
 		}while(!isStop);
 		
 	}
 
-	private void f_managementByProcess() {
-		ProcessController processController = new ProcessController();
-		processController.execute();
+	private void f_delete() {
+		// TODO Auto-generated method stub
 		
 	}
 
-	private void f_managementByOrder() {
-		OrderController orderController = new OrderController();
-		orderController.execute();
-	}
-
-	private void f_managementByProduct() {
-		ProductController productController = new ProductController();
-		productController.execute();
+	private void f_update() {
+		// TODO Auto-generated method stub
 		
 	}
 
-	private void f_managementByRobot() {
-		RobotCotroller robotCotroller = new RobotCotroller();
-		robotCotroller.execute();
+	private void f_insert() {
+		// TODO Auto-generated method stub
 		
 	}
 
-	private void f_managementByStation() {
-		StationController stationController = new StationController();
-		stationController.execute();
+	private void f_selectAll() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

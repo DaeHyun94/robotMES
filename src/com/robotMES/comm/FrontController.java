@@ -11,14 +11,18 @@ public class FrontController {
 		boolean isStop = false;
 		
 		do {
-			System.out.println("#MES - Manufacturing Execution System");
-			System.out.print("#Input >> ");
+			System.out.println("""
+					########################################
+					   MES - Manufacturing Execution System
+					########################################
+					""");
+			System.out.print("■ Login ID >> ");
 			String job = sc.next();
 			
 			switch(job) {
 				case "Admin" -> {controller = ControllerFactory.make("Admin");}
 				case "end" -> {isStop = true; continue;}
-				default -> {continue;}
+				default -> {loginDisplay(); continue;}
 			}
 			controller.execute();
 			
@@ -27,4 +31,14 @@ public class FrontController {
 		sc.close();
 		System.out.println("Program End....");
 	}
+
+	private static void loginDisplay() {
+		System.out.println("""
+				▶ 존재하지 않는 아이디입니다.
+				
+				""");
+	}
+	
+	
+	
 }
