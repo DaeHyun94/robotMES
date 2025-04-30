@@ -73,11 +73,11 @@ public class FrontAdmin implements CommControllerInterface{
 
 	private void menuDisplay() {
 		System.out.println("""
-				=================================
+				===================================
 				업무 목록 선택             0.로그아웃
 				
 				1.공정    2.로봇    3.제품    4.오더 
-				=================================
+				===================================
 				""");
 		System.out.print("(선택)>>>");
 	}

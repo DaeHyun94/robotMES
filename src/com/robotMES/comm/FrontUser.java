@@ -1,7 +1,9 @@
 package com.robotMES.comm;
 
-public class FrontUser implements CommControllerInterface{
+import java.util.Scanner;
 
+public class FrontUser implements CommControllerInterface{
+	static Scanner sc = new Scanner(System.in);
 	@Override
 	public void execute() {
 		boolean isStop = false;
@@ -10,17 +12,23 @@ public class FrontUser implements CommControllerInterface{
 			int job = sc.nextInt();
 			
 			switch(job) {
-				case 1->{f_managementByStation();}
-				case 2->{f_managementByRobot();}
-				case 3->{f_managementByProduct();}
-				case 4->{f_managementByOrder();}
-				//case 5->{f_managementByAdmin();}
-				//case 6->{f_managementByUser();}
-				case 0->{logoutDisplay();; isStop = true; continue;}
+				case 1->{}
 				default ->{continue;}
 			}
 			
 		}while(!isStop);
+		
+	}
+
+	private void menuDisplay() {
+		System.out.println("""
+				=================================
+				업무 목록 선택             0.로그아웃
+				
+				1.공정선택    2.로봇제어    3.공정신호   
+				=================================
+				""");
+		System.out.print("(선택)>>>");
 		
 	}
 

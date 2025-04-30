@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.robotMES.admin.AdminDTO;
 import com.robotMES.product.ProductDAO;
 import com.robotMES.product.ProductDTO;
 import com.robotMES.station.StationDAO;
@@ -156,6 +157,28 @@ public class OrderDAO {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	public OrderDTO selectByName(String orderID) {
+		OrderDTO order = null;
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		String sql = "select * from tb_Admin where Order_id = ?";
+		try {
+			st = conn.prepareStatement(sql); 
+			st.setString(1, orderID); 
+			rs = st.executeQuery();
+			
+			if (rs.next()) {
+				order = makeOrder(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.dbDisconnect(conn, st, rs);
+		}
+		return order;
 	}
 
 	
