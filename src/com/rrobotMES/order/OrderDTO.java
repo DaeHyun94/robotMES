@@ -28,7 +28,8 @@ public class OrderDTO {
 	
 	@Override
 	public String toString() {
-		return	"◎ 관리자 =" + admin_id 
+		return	"ID = " + id
+				+ " 관리자 =" + admin_id 
 				+ ", 작업자 =" + user_id 
 				+ ", 제품 =" + product_id
 				+ ", 담당 로봇=" + robot_id 
@@ -37,8 +38,8 @@ public class OrderDTO {
 				+ ", 목표 수량=" + product_count 
 				+ ", 시작 공정 OK 신호=" + from_station_signal
 				+ ", 완료 공정 OK 신호=" + to_station_signal 
-				+ ", 오더 생성 시간=" + order_at 
-				+ ", 오더 완료 시간=" + complete_at
+				+ ", 오더 생성 날짜=" + order_at 
+				+ ", 오더 완료 날짜=" + complete_at
 				+ "";
 	}
 }

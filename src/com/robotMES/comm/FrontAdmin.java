@@ -25,8 +25,8 @@ public class FrontAdmin implements CommControllerInterface{
 				case 2->{f_managementByRobot();}
 				case 3->{f_managementByProduct();}
 				case 4->{f_managementByOrder();}
-				//case 5->{f_managementByAdmin();}
-				//case 6->{f_managementByUser();}
+				case 6->{f_managementByAdmin();}
+				case 5->{f_managementByUser();}
 				case 0->{logoutDisplay();; isStop = true; continue;}
 				default ->{continue;}
 			}
@@ -73,11 +73,11 @@ public class FrontAdmin implements CommControllerInterface{
 
 	private void menuDisplay() {
 		System.out.println("""
-				===================================
-				업무 목록 선택             0.로그아웃
+				==================================================
+				업무 목록 선택                               0.로그아웃
 				
-				1.공정    2.로봇    3.제품    4.오더 
-				===================================
+				1.공정    2.로봇    3.제품    4.오더   5.작업자  
+				=================================================
 				""");
 		System.out.print("(선택)>>>");
 	}

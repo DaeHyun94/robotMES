@@ -2,7 +2,6 @@ package com.rrobotMES.order;
 
 import java.util.List;
 
-import com.robotMES.admin.AdminDTO;
 import com.robotMES.product.ProductDTO;
 import com.robotMES.station.StationDTO;
 
@@ -34,6 +33,11 @@ public class OrderService {
 	public OrderDTO selectByName(String orderID) {
 	
 		return orderDAO.selectByName(orderID);
+	}
+
+	public int update(OrderDTO order) {
+		return orderDAO.update(order);
+		
 	}
 
 }

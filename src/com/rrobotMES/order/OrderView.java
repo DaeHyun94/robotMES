@@ -2,8 +2,6 @@ package com.rrobotMES.order;
 
 import java.util.List;
 
-import com.robotMES.admin.AdminDTO;
-
 public class OrderView {
 
 	public static void menuDisplay() {
@@ -41,5 +39,13 @@ System.out.println("""
 		System.out.println("※ 추가 완료");
 	}
 	
+	public static void display(String message) {
+		if(message == null) {
+			System.out.println("잘못된 입력");
+			return;
+		}
+		System.out.println(message);
+		
+	}
 
 }

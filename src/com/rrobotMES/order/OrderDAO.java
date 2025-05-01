@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.robotMES.admin.AdminDTO;
 import com.robotMES.product.ProductDAO;
 import com.robotMES.product.ProductDTO;
 import com.robotMES.station.StationDAO;
@@ -27,7 +28,6 @@ public class OrderDAO {
 		String sql = """
 					select *
 					from tb_order
-					order by order_at
 					""";
 		try {
 			st = conn.createStatement();
@@ -46,6 +46,7 @@ public class OrderDAO {
 		OrderDTO order = OrderDTO.builder()
 				.id(rs.getString("id"))
 				.admin_id(rs.getString("admin_id"))
+				.user_id(rs.getString("user_id"))
 				.product_id(rs.getString("product_id"))
 				.robot_id(rs.getString("robot_id"))
 				.from_station_id(rs.getString("from_station_id"))
@@ -179,6 +180,40 @@ public class OrderDAO {
 			DBUtil.dbDisconnect(conn, st, rs);
 		}
 		return order;
+	}
+
+	public int update(OrderDTO order) {
+		int result = 0;
+		Connection conn = DBUtil.getConnection();
+		PreparedStatement st = null;
+		Map<String, Object> dynamicSQL = new HashMap<>();
+		
+		if (order.getUser_id() != null)
+			dynamicSQL.put("user_id", order.getUser_id());
+		
+		String sql = " update tb_order set ";
+		String sql2 = " where id = ? ";
+		for (String key : dynamicSQL.keySet()) {
+			sql += key + "=" + "?,";
+		}
+		sql = sql.substring(0, sql.length() - 1);
+		sql += sql2;
+		//System.out.println(sql);
+
+		try {
+			st = conn.prepareStatement(sql);
+			int i = 1;
+			for (String key : dynamicSQL.keySet()) {
+				st.setObject(i++, dynamicSQL.get(key));
+			}
+			st.setString(i, order.getId());
+			result = st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.dbDisconnect(conn, st);
+		}
+		return result;
 	}
 
 	

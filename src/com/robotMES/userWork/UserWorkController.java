@@ -4,12 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
-import com.robotMES.admin.AdminDTO;
 import com.robotMES.admin.AdminService;
-import com.robotMES.admin.AdminView;
 import com.robotMES.comm.CommControllerInterface;
-import com.robotMES.product.ProductDTO;
-import com.robotMES.product.ProductView;
+import com.robotMES.robotControll.RobotControllController;
 import com.rrobotMES.order.OrderDTO;
 import com.rrobotMES.order.OrderService;
 import com.rrobotMES.order.OrderView;
@@ -28,7 +25,8 @@ public class UserWorkController implements CommControllerInterface{
 			
 			switch(job) {
 			case 1->{f_choiceOrder();}
-			case 5->{isStop = true; continue; }
+			case 2->{f_robotControl();}
+			case 0->{isStop = true; continue; }
 			default ->{continue;}
 			}
 			
@@ -39,8 +37,38 @@ public class UserWorkController implements CommControllerInterface{
 		
 	}
 
+	private void f_robotControl() {
+		boolean isStop = false;
+		do {
+			UserWorkView.robotDisplay();
+			int job = sc.nextInt();
+			
+			switch(job) {
+			case 1->{f_robotNow();}
+			case 2->{f_robotControl();}
+			case 3->{f_robotStop();}
+			case 0->{isStop = true; continue; }
+			default ->{continue;}
+			}
+			
+			
+			
+			
+		}while(!isStop);
+	}
+
+	private void f_robotStop() {
+		
+		
+	}
+
+	private void f_robotNow() {
+		RobotControllController rcc = new RobotControllController();
+		rcc.f_select();
+		
+	}
+
 	private void f_choiceOrder() {
-System.out.println("dd");
 		OrderService orderService = new OrderService();
 		List<OrderDTO> orderlist = orderService.selectAll();
 		OrderView.display(orderlist);
@@ -50,23 +78,24 @@ System.out.println("dd");
 			return;
 		}
 		
-		OrderDTO order = new OrderDTO(); 
-		
+		OrderDTO order = null;
+		String orderID = null;
 		while(true) { //Product 체크
 			System.out.print("참여할 오더ID 입력 :");
-			String orderID = sc.next();
+			orderID = sc.next();
 			if(orderID.equals("0")) return;
-			
-			for(OrderDTO ordertDTO : orderlist) {
-				if(ordertDTO.getId().equals(orderID)) {
-					order = ordertDTO;
+			for(OrderDTO orderDTO : orderlist) {
+				if(orderDTO.getId().equals(orderID)) {
+					order = orderDTO;
 					break;
 				}
 			}
-
 			if(order == null) {
 				System.out.println("없는 오더ID 입니다. 오더ID 다시입력하세요.[나가기 '0' 입력]");
 			}else break;
 		}
+		 order.setUser_id("User");
+		 orderService.update(order);
+		 OrderView.display("▶ 작업참여가 완료 되었습니다.");
 	}
 }

@@ -1,12 +1,10 @@
 package com.rrobotMES.order;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
-import com.robotMES.admin.AdminDTO;
 import com.robotMES.admin.AdminView;
 import com.robotMES.comm.CommControllerInterface;
 import com.robotMES.product.ProductDTO;
@@ -145,7 +143,7 @@ public class OrderController implements CommControllerInterface{
 		
 		OrderDTO order = OrderDTO.builder()
 				.id(sdf.format(Calendar.getInstance().getTime()))
-				.admin_id("admin")
+				.admin_id("Admin")
 				.product_id(product.getProduct_name())
 				.from_station_id(station_from.getStation_name())
 				.to_station_id(station_to.getStation_name())
