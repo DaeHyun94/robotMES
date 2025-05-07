@@ -6,7 +6,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/Users/hyeon/Project/library/lombok.jar"/>
-	<classpathentry kind="lib" path="/Users/hyeon/Project/library/ojdbc6_g.jar"/>
+	<classpathentry kind="lib" path="C:/shinhan study/libaray/json-20250107.jar"/>
+	<classpathentry kind="lib" path="C:/shinhan study/libaray/lombok.jar"/>
+	<classpathentry kind="lib" path="C:/shinhan study/libaray/ojdbc6_g.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
